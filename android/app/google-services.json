@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "788072331181",
+    "project_id": "kinterest-dac68",
+    "storage_bucket": "kinterest-dac68.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:788072331181:android:9b2f26b549eb03a834d324",
+        "android_client_info": {
+          "package_name": "com.pinterest"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "788072331181-iodmdsg5rdinihuooch8842b9e97c2m8.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCy69V9SPHYxgqoCzxyIUSYpPWxh_1zlYc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "788072331181-iodmdsg5rdinihuooch8842b9e97c2m8.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
