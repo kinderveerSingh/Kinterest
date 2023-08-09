@@ -1,179 +1,159 @@
-import React from 'react';
-import {h, w, f} from '../theme/responsive';
 import {
-  View,
-  Text,
   StyleSheet,
-  Pressable,
+  Text,
+  View,
   Image,
+  Pressable,
   ScrollView,
-  ImageBackground,
 } from 'react-native';
-import {SafeAreaView} from 'react-native-safe-area-context';
+import {useState, useEffect} from 'react';
+import {h, w, f} from '../theme/responsive';
+import {useNavigation} from '@react-navigation/native';
+import firestore from '@react-native-firebase/firestore';
 
 const Profile = () => {
+  const navigation = useNavigation();
+  const [data, setData] = useState([]);
+  console.log(data);
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  const fetchData = async () => {
+    try {
+      const snapshot = await firestore().collection('userProfile').get();
+      const items = snapshot.docs.map(doc => doc.data());
+      // return data.data();
+      setData(items);
+    } catch (error) {
+      console.log('Error fetching data: ', error);
+    }
+  };
   return (
-    <ScrollView style={styles.mainContainer}>
-      <SafeAreaView>
-        <View style={styles.imageView}>
-          <Pressable
-            //onPress={goBack}
-            style={styles.backbtn}>
-            <Image
-              source={require('../../assets/left-chevron.png')}
-              style={styles.iconImage}
-            />
-          </Pressable>
+    <View style={styles.container}>
+      <View style={styles.header}>
+        <View style={styles.subheader1}>
           <Image
-            source={require('../../assets/Trustnoone!.png')}
-            style={styles.cardImage}
+            source={require('../../assets/add-friend.png')}
+            style={styles.icon}
           />
         </View>
-        <View style={styles.description}>
-          <View style={styles.detail1}>
-            <Text style={styles.mainTitle}>The Lion king of the jungle </Text>
-            <Text style={styles.titledescription}>
-              Lions spend much of their time resting; they are inactive for
-              about twenty hours per day. Although lions can be active at any
-              time.
-            </Text>
-          </View>
-          <View style={styles.detail}>
-            <Image
-              source={require('../../assets/image_processing20201027-29107-1f4mqzf.png')}
-              style={styles.profileImage}
-            />
-            <Pressable style={[styles.button, styles.addColor]}>
-              <Text style={styles.textStyle}>Save</Text>
-            </Pressable>
-          </View>
-
-          {/* <View style={styles.detail2}>
-            <Pressable style={[styles.button, styles.addColor]}>
-              <Text style={styles.textStyle}>View</Text>
-            </Pressable>
-            <Pressable style={styles.button}>
-              <Text style={styles.textStyle}>Save</Text>
-            </Pressable>
-          </View> */}
+        <View style={styles.subheader2}>
+          <Text style={styles.profilename}>Profile</Text>
         </View>
-      </SafeAreaView>
-    </ScrollView>
+        <View style={styles.subheader3}>
+          <Image
+            source={require('../../assets/arrow.png')}
+            style={styles.icon}
+          />
+        </View>
+      </View>
+
+      <View style={styles.profile}>
+        <Image
+          source={require('../../assets/Trustnoone!.png')}
+          style={styles.image}
+        />
+        <Text style={styles.name}>name</Text>
+        <Text style={styles.email}>Email</Text>
+      </View>
+    </View>
   );
 };
-const styles = StyleSheet.create({
-  mainContainer: {
-    flex: 1,
-    //paddingHorizontal: w(1),
-    backgroundColor: 'black',
-    //backgroundColor: '#232324',
-  },
-  imageView: {
-    height: h(87),
-    width: '100%',
-  },
-  cardImage: {
-    height: '100%',
-    width: '100%',
-    // backgroundColor: 'pink',
-    borderTopLeftRadius: 20,
-    borderTopRightRadius: 20,
-    borderRadius: 20,
-  },
 
-  description: {
-    height: h(25),
-    width: '100%',
-    //borderWidth: 1,
-    backgroundColor: 'white',
-    //backgroundColor: '#232324',
-    borderBottomLeftRadius: 20,
-    borderBottomRightRadius: 20,
-    // paddingTop: 10,
-    justifyContent: 'space-between',
-    // marginTop: 28,
-  },
-  detail: {
-    height: h(8),
-    width: '100%',
-    //backgroundColor: 'green',
-    flexDirection: 'row',
-    justifyContent: 'space-around',
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: 'rgba(0,0,0,0)',
     alignItems: 'center',
   },
-  detail1: {
-    height: h(10),
-    width: '100%',
-    //backgroundColor: 'pink',
-  },
-  detail2: {
-    height: h(6.2),
-    width: '100%',
+  header: {
+    height: h(7),
+    width: '99.8%',
+    //backgroundColor: 'green',
+    alignItems: 'center',
+    justifyContent: 'space-around',
     flexDirection: 'row',
-    justifyContent: 'space-evenly',
-    alignItems: 'flex-end',
-    paddingBottom: 8,
-    // backgroundColor: 'blue',
-  },
-  iconImage: {
-    height: h(3),
-    width: w(6),
-  },
-  backbtn: {
-    position: 'absolute',
-    zIndex: 5,
-    top: 23,
-    left: 13,
-    // height: 40,
-    // width: 40,
-    // borderRadius: 20,
-    // backgroundColor: 'grey',
-    // alignItems: 'center',
-    // justifyContent: 'center',
-  },
-  profileImage: {
-    height: h(6),
-    width: w(12),
-    borderRadius: 25,
+    paddingHorizontal: 5,
+    // marginTop: 1.5,
+    borderBottomWidth: 0.1,
+
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 1,
+    },
+    shadowOpacity: 0.2,
+    shadowRadius: 1.41,
+
+    elevation: 2,
   },
 
-  button: {
-    height: h(6),
-    width: w(19),
-    backgroundColor: '#232324',
-    borderWidth: 1,
-    borderRadius: 20,
+  subheader1: {
+    height: h(6.8),
+    width: '33%',
+    //backgroundColor: 'red',
+    alignItems: 'center',
+    flexDirection: 'row',
+    justifyContent: 'flex-start',
+    paddingLeft: 10,
+  },
+  subheader2: {
+    height: h(6.8),
+    width: '33%',
+    //backgroundColor: 'green',
+    alignItems: 'center',
+    // justifyContent: 'center',
+  },
+  subheader3: {
+    height: h(6.8),
+    width: '33%',
+    // backgroundColor: 'grey',
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'flex-end',
+    paddingRight: 10,
+  },
+  icon: {
+    height: 30,
+    width: 30,
+    // left: 70,
     alignItems: 'center',
     justifyContent: 'center',
   },
-  addColor: {
-    backgroundColor: '#9da19a',
+  profile: {
+    height: 310,
+    width: '100%',
+    //backgroundColor: 'grey',
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginTop: 20,
   },
-  textStyle: {
-    fontSize: f(1.2),
+  image: {
+    height: 140,
+    width: 140,
+    backgroundColor: 'green',
+    // alignItems: 'center',
+    // justifyContent: 'center',
+    borderRadius: 70,
+  },
+  profilename: {
+    fontSize: 18.5,
     fontWeight: '700',
-    fontStyle: 'normal',
-    color: 'white',
+    color: 'black',
+    paddingTop: 15,
   },
-  mainTitle: {
-    fontSize: f(1.6),
+  name: {
+    fontSize: 18,
     fontWeight: '700',
-    textAlign: 'center',
     color: 'black',
-    margin: 10,
-    lineHeight: 30,
-    letterSpacing: 1.5,
+    paddingTop: 15,
   },
-  titledescription: {
-    fontSize: f(1.1),
-    fontWeight: '600',
-    fontStyle: 'normal',
-    /// textAlign: 'center',
+  email: {
+    fontSize: 17,
+    fontWeight: '700',
     color: 'black',
-    paddingHorizontal: 12,
-    lineHeight: 17,
-    letterSpacing: 0.5,
+    paddingTop: 10,
   },
 });
-
 export default Profile;

@@ -6,38 +6,168 @@ import {
   ScrollView,
   TextInput,
   Image,
+  Alert,
 } from 'react-native';
 import React, {useState} from 'react';
-import {signInWithEmailAndPassword} from 'firebase/auth';
+import {
+  signInWithEmailAndPassword,
+  createUserWithEmailAndPassword,
+} from 'firebase/auth';
 import auth from '@react-native-firebase/auth';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {h, f, w} from '../theme/responsive';
+import Toast from 'react-native-simple-toast';
 import {useNavigation} from '@react-navigation/native';
+import firestore from '@react-native-firebase/firestore';
 
 function Login2(props) {
-  // const {navigation} = props;
-
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
   const navigation = useNavigation();
-  const login = () => {
-    auth()
-      .signInWithEmailAndPassword(email, password)
-      .then(() => {
-        alert('user login successfully');
-        navigation.navigate('interest');
+  // const login = () => {
+  //   auth()
+  //     .signInWithEmailAndPassword(email, password)
+  //     .then(() => {
+  //       alert('user login successfully');
+  //       navigation.navigate('interest');
+  //     })
+  //     .catch(error => {
+  //       const errorCode = error.code;
+  //       const errorMessage = error.message;
+  //       alert(errorMessage);
+  //       console.log(error);
+  //     });
+  // };
+
+  const createNewUser = async (email, password) => {
+    await auth()
+      .createUserWithEmailAndPassword(email, password)
+
+      .then(result => {
+        // Alert('new user login successfully');
+        console.log('User account created & signed in!', result);
+        const {user} = result || {};
+        const {_user} = user || {};
+        const {uid} = _user;
+        console.log('uid', uid);
+
+        let obj = {
+          email,
+          uid,
+          userLogin: 'true',
+        };
+
+        AsyncStorage.setItem('userDetail', JSON.stringify(obj));
+        //      await
+        // .firestore()
+        // .collection('loginUser')
+        // .doc(response.user.uid)
+        // .set(LoginDetail);
+        //for
+
+        // const {email} = result.user;
+        // const userDetail = {
+        //   email,
+        // };
+        // const userDetailJson = JSON.stringify(userDetail);
+        // AsyncStorage.setItem('userDetail', userDetailJson);
+        // AsyncStorage.setItem('userLogin', 'true');
+        // setUserLogin('true');
+        // setUserDetails(userDetail);
+        //console.log('User account created & signed in!', result.user);
       })
       .catch(error => {
+        if (error.code === 'auth/email-already-in-use') {
+          console.log('That email address is already in use!');
+        }
+
+        if (error.code === 'auth/invalid-email') {
+          console.log('That email address is invalid!');
+        }
+
+        console.error(error);
+      });
+  };
+  const createUser = async () => {
+    console.log('createUser');
+    await auth()
+      .signInWithEmailAndPassword(email, password)
+      .then(userCredential => {
+        // Alert('user login successfully');
+        console.log('userCredential', userCredential);
+        const {user} = userCredential || {};
+        const {_user} = user || {};
+        const {uid} = _user;
+        console.log('uid', uid);
+
+        let obj = {
+          email,
+          uid,
+          userLogin: 'true',
+        };
+
+        AsyncStorage.setItem('userDetail', JSON.stringify(obj));
+      })
+      .catch(error => {
+        console.log('error', error);
         const errorCode = error.code;
         const errorMessage = error.message;
-        alert(errorMessage);
-        console.log(error);
+        console.log('errorCode', errorCode, 'errorMessage', errorMessage);
+        if (errorCode === 'auth/user-not-found') {
+          createNewUser(email, password);
+        }
       });
+    // const response = await auth()
+    //   .createUserWithEmailAndPassword(email, password)
+
+    //   .then(() => {
+    //     console.log('User account created & signed in!');
+
+    //     //      await
+    //     // .firestore()
+    //     // .collection('loginUser')
+    //     // .doc(response.user.uid)
+    //     // .set(LoginDetail);
+    //     //for
+
+    //     // const {email} = result.user;
+    //     // const userDetail = {
+    //     //   email,
+    //     // };
+    //     // const userDetailJson = JSON.stringify(userDetail);
+    //     // AsyncStorage.setItem('userDetail', userDetailJson);
+    //     // AsyncStorage.setItem('userLogin', 'true');
+    //     // setUserLogin('true');
+    //     // setUserDetails(userDetail);
+    //     console.log('User account created & signed in!', result.user);
+    //   })
+    //   .catch(error => {
+    //     if (error.code === 'auth/email-already-in-use') {
+    //       console.log('That email address is already in use!');
+    //     }
+
+    //     if (error.code === 'auth/invalid-email') {
+    //       console.log('That email address is invalid!');
+    //     }
+
+    //     console.error(error);
+    //   });
   };
   // const saveEmailPass = async () => {
   //   try {
-  //     const email = await AsyncStorage.getItem('EMAIL');
-  //     await AsyncStorage.setItem('EMAIL', 'email');
+  //     const userCreated = await auth().createUserWithEmailAndPassword(
+  //       email,
+  //       password,
+  //     );
+  //     navigation.navigate('Login1');
+  //     console.log(userCreated);
+  //   } catch (e) {
+  //     console.log(e);
+  //   }
+  // };
+
+  //   try {
+  //     await AsyncStorage.getItem('EMAIL', 'email');
   //     await AsyncStorage.setItem('PASSWORD', 'password');
   //     navigation.navigate('Login1');
   //   } catch (e) {
@@ -99,7 +229,13 @@ function Login2(props) {
         <Pressable
           style={styles.inputbutton}
           onPress={() => {
-            login();
+            if (!email) {
+              Alert.alert('Please enter email');
+            } else if (!password) {
+              Alert.alert('Please enter password');
+            } else {
+              createUser();
+            }
           }}>
           <Text style={styles.textStyle3}>Continue</Text>
         </Pressable>

@@ -10,6 +10,7 @@ import {
 } from 'react-native';
 import React, {useState} from 'react';
 import {h, f, w} from '../theme/responsive';
+import {useNavigation} from '@react-navigation/native';
 
 const gridssss = [
   {
@@ -125,6 +126,7 @@ const gridssss = [
 const RenderItem = props => {
   const {item, abc, index} = props;
   const [selected, setSelected] = useState(false);
+  const navigation = useNavigation();
   return (
     <Pressable
       style={styles.grid}
@@ -148,8 +150,8 @@ const RenderItem = props => {
   );
 };
 
-const Notification = () => {
-  //const {navigation} = props;
+const Interest = () => {
+  const navigation = useNavigation();
   const [selected, setselected] = useState([]);
   const [counter, setCounter] = useState(0);
   const [array, setArray] = useState([]);
@@ -180,7 +182,7 @@ const Notification = () => {
       <View style={styles.listHeader}>
         <Text style={styles.header}>{`Welcome To Pinterest`}</Text>
         <View style={{flexDirection: 'row'}}>
-          <Text style={{fontSize: f(1.7)}}>{`Pick 5 or more topics`}</Text>
+          <Text style={{fontSize: f(1.7)}}>{`Pick Multiple Interest`}</Text>
         </View>
       </View>
     );
@@ -206,7 +208,7 @@ const Notification = () => {
             },
           ]}
           onPress={() => {
-            navigation.navigate('Homefeed');
+            navigation.navigate('Home1');
           }}>
           <Text style={styles.textStyle2}>Continue</Text>
         </Pressable>
@@ -299,4 +301,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Notification;
+export default Interest;

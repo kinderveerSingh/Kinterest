@@ -17,15 +17,14 @@ import {useNavigation} from '@react-navigation/native';
 const Login1 = () => {
   const [email, setEmail] = useState();
   const navigation = useNavigation();
-  const saveEmailPass = async () => {
-    try {
-      await AsyncStorage.setItem('EMAIL', 'email');
-
-      navigation.navigate('Login2');
-    } catch (e) {
-      console.log(e);
-    }
-  };
+  // const saveEmailPass = async () => {
+  //   try {
+  //     await AsyncStorage.setItem('EMAIL', 'email');
+  //     navigation.navigate('Login2');
+  //   } catch (e) {
+  //     console.log(e);
+  //   }
+  // };
 
   return (
     <ScrollView style={styles.container}>
@@ -54,7 +53,7 @@ const Login1 = () => {
           <Pressable
             style={styles.inputbutton}
             onPress={() => {
-              saveEmailPass();
+              navigation.navigate('Login2');
             }}>
             <Text style={styles.textStyle2}>Continue</Text>
           </Pressable>

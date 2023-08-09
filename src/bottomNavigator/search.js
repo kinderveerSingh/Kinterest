@@ -1,159 +1,142 @@
-import {
-  View,
-  Text,
-  StyleSheet,
-  TextInput,
-  Image,
-  Pressable,
-  ScrollView,
-} from 'react-native';
-import {launchImageLibrary} from 'react-native-image-picker';
-import {h, f, w} from '../theme/responsive';
-
+import {Image, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import React, {useState} from 'react';
-import {useNavigation} from '@react-navigation/native';
-const navigation = useNavigation;
-const Search = () => {
-  const [title, setTitle] = useState(null);
-  const [description, setDescription] = useState(null);
-  const [image, setImage] = useState(null);
+import {TextInput} from 'react-native-gesture-handler';
+import {GestureHandlerRootView} from 'react-native-gesture-handler';
+
+import Animated, {
+  useAnimatedStyle,
+  useSharedValue,
+  withTiming,
+} from 'react-native-reanimated';
+
+const Search = props => {
+  // const PinView = props => {
+  //   const {item} = props?.route?.params || {};
+  //   const {Title, Description, image} = item || {};
+
+  //   let text = 'River';
+  //   useEffect(() => {
+  //     fetchData(item);
+  //   }, []);
+
+  //   const results = item => {
+  //     firebase
+  //       .firestore()
+  //       .collection('Images')
+  //       .orderBy('Title')
+  //       .startAt(text)
+
+  //       .get();
+  //   };
+  //   console.log('Results', results);
+
+  //   const animation = useSharedValue(0);
+  //   const animatedStyle = useAnimatedStyle(() => {
+  //     return {
+  //       width:
+  //         animation.value == 1
+  //           ? withTiming(300, {duration: 500})
+  //           : withTiming(0, {duration: 500}),
+  //     };
+  //   });
+  // };
+
   return (
-    <ScrollView style={styles.mainContainer}>
-      <View style={styles.header}>
-        <Pressable
+    <GestureHandlerRootView style={styles.container}>
+      <Animated.View
+        style={[
+          {
+            width: 350,
+            height: 50,
+            backgroundColor: '#E7E7E7',
+            borderRadius: 10,
+            flexDirection: 'row',
+            alignItems: 'center',
+            justifyContent: 'center',
+          },
+        ]}>
+        <TextInput
+          style={{width: '82%'}}
+          placeholder={'Search For Pin...'}
+          // onChangeText={(text) => this.setState({searchText:text})}
+          // onSubmitEditing={() => this.firstSearch()}
+          clearButtonMode="always"
+        />
+        <TouchableOpacity
           onPress={() => {
-            navigation.goBack();
+            // if (animation.value == 1) {
+            //   animation.value = 0;
+            // } else {
+            //   animation.value = 1;
+            // }
           }}>
           <Image
-            source={require('../../assets/icons8-back-30.png')}
-            style={styles.iconStyle}
-          />
-        </Pressable>
-        <Text style={{fontWeight: '700', fontSize: f(1.3), color: 'black'}}>
-          Create Pin
-        </Text>
-
-        <Pressable style={styles.inputbutton}>
-          <Text style={styles.textStyle2}>Next</Text>
-        </Pressable>
-      </View>
-      <View style={styles.seperator}></View>
-
-      <Pressable style={styles.addPic}>
-        <Image
-          style={styles.profileImage}
-          resizeMode="cover"
-          source={
-            // image?.uri
-            // ? {uri: image.uri} :
-            require('../../assets/image_processing20201027-29107-1f4mqzf.png')
-          }
-        />
-      </Pressable>
-      <View style={styles.seperator}></View>
-      <Text style={styles.title}>Add the Title</Text>
-      <TextInput
-        style={styles.inputStyle}
-        placeholder="Write a title "
-        keyboardType={'default'}
-        //value={email}
-        //</View>  onChangeText={txt => setEmail(txt)}
-      ></TextInput>
-      <View style={styles.seperator}></View>
-      <Text style={styles.title}>Add the Details</Text>
-      <TextInput
-        style={styles.inputStyle}
-        placeholder="Write a description for your Pin here"
-        keyboardType={'default'}></TextInput>
-      <View style={styles.seperator}></View>
-    </ScrollView>
+            source={require('../../assets/loupe.png')}
+            style={{width: 30, height: 30}}></Image>
+        </TouchableOpacity>
+      </Animated.View>
+    </GestureHandlerRootView>
   );
 };
 
 export default Search;
 
 const styles = StyleSheet.create({
-  mainContainer: {
+  container: {
     flex: 1,
-    backgroundColor: 'white',
-  },
-  header: {
-    height: h(7),
-    width: '100%',
-    //backgroundColor: 'green',
-    flexDirection: 'row',
-    justifyContent: 'space-between',
     alignItems: 'center',
-    opacity: 1,
-    //borderBottomWidth: 1,
-    borderColor: 'grey',
-    paddingHorizontal: 5,
-  },
-  iconStyle: {
-    height: 32,
-    width: 30,
-  },
-
-  inputStyle: {
-    fontSize: f(1.3),
-    fontWeight: '700',
-    height: h(9.7),
-    width: '100%',
-
-    //marginTop: 10,
-    // marginBottom: 10,
-    // backgroundColor: '#e3e3e3',
-  },
-
-  textStyle2: {
-    fontWeight: '500',
-    fontSize: f(1.4),
-    paddingTop: 10,
-    color: 'white',
-    alignItems: 'center',
-  },
-
-  inputbutton: {
-    height: h(5.1),
-    width: w(20),
-    backgroundColor: 'blue',
-    borderRadius: 16,
-    // justifyContent: 'center',
-    alignItems: 'center',
-  },
-  addPic: {
-    height: 350,
-    width: 380,
-    //backgroundColor: 'grey',
-    //flexDirection: 'row',
-    alignItems: 'center',
-    // justifyContent: 'center',
-    marginTop: 10,
-  },
-  profileImage: {
-    width: w(55),
-    height: h(42),
-    borderRadius: w(8),
-  },
-  seperator: {
-    height: 1.5,
-    borderBottomWidth: 0.1,
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 1,
-    },
-    shadowOpacity: 0.2,
-    shadowRadius: 1.41,
-
-    elevation: 2,
-  },
-  title: {
-    fontSize: f(1.26),
-    //backgroundColor: 'red',
-    fontWeight: '700',
-    paddingHorizontal: 5,
-    paddingTop: 3,
-    color: '#3d3a3a',
+    justifyContent: 'flex-start',
+    marginTop: 30,
   },
 });
+
+// import React, { useState } from 'react';
+// import { View, FlatList, TextInput, Button } from 'react-native';
+
+// const SearchScreen = () => {
+//   const [searchTerm, setSearchTerm] = useState('');
+//   const [searchResults, setSearchResults] = useState([]);
+
+//   const handleSearch = async () => {
+//     if (searchTerm.trim() === '') return;
+
+//     const results = await searchFirestore(searchTerm);
+//     setSearchResults(results);
+//   };
+
+//   const renderItem = ({ item }) => (
+//     <View>
+//       {/* Render your search result item here */}
+//     </View>
+//   );
+
+//   return (
+//     <View>
+//       <TextInput
+//         placeholder="Search..."
+//         value={searchTerm}
+//         onChangeText={setSearchTerm}
+//       />
+//       <Button title="Search" onPress={handleSearch} />
+
+//       <FlatList
+//         data={searchResults}
+//         renderItem={renderItem}
+//         keyExtractor={(item) => item.id} // Adjust this based on your data structure
+//       />
+//     </View>
+//   );
+// };
+
+// import firestore from '@react-native-firebase/firestore';
+
+// const searchFirestore = async (searchTerm) => {
+//   const querySnapshot = await firestore()
+//     .collection('yourCollectionName')
+//     .where('searchableField', '>=', searchTerm)
+//     .where('searchableField', '<=', searchTerm + '\uf8ff')
+//     .get();
+
+//   const results = querySnapshot.docs.map((doc) => doc.data());
+//   return results;
+// };

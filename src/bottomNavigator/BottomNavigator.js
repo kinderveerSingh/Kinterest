@@ -1,16 +1,20 @@
-import React from 'react';
-import {View, Text, StyleSheet, Image, Pressable} from 'react-native';
+import {
+  View,
+  Text,
+  StyleSheet,
+  Image,
+  Pressable,
+  ImageBackground,
+} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
-import Login1 from './login1';
-import Login2 from './login2';
 import Home1 from './home1';
 import Home2 from '../authScreen/home2';
 import Search from './search';
 import Add from './add';
 import Notification from './notification';
 import Profile from './profile';
-import Profile2 from './profile2';
-
+import PinView from './pinView';
+import PostPin from './postPin';
 import {h, f, w} from '../theme/responsive';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 
@@ -21,14 +25,13 @@ const BottomNavigator = () => {
     <Tab.Navigator
       tabBar={() => <TabBar />}
       screenOptions={{headerShown: false}}>
-      <Tab.Screen name="Login1" component={Login1} />
-      <Tab.Screen name="Login2" component={Login2} />
       <Tab.Screen name="Home1" component={Home1} />
+      <Tab.Screen name="PinView" component={PinView} />
       <Tab.Screen name="Search" component={Search} />
       <Tab.Screen name="Add" component={Add} />
+      <Tab.Screen name="PostPin" component={PostPin} />
       <Tab.Screen name="Notification" component={Notification} />
       <Tab.Screen name="Profile" component={Profile} />
-      <Tab.Screen name="Profile2" component={Profile2} />
     </Tab.Navigator>
   );
 };
@@ -39,32 +42,12 @@ function TabBar() {
     <View style={styles.container}>
       <Pressable
         onPress={() => {
-          navigation.navigate('Login1');
-        }}
-        style={styles.tabButtons}>
-        <Image
-          style={styles.iconButton}
-          source={require('../../assets/home(1).png')}
-        />
-      </Pressable>
-      <Pressable
-        onPress={() => {
-          navigation.navigate('Login2');
-        }}
-        style={styles.tabButtons}>
-        <Image
-          style={styles.iconButton}
-          source={require('../../assets/home(1).png')}
-        />
-      </Pressable>
-      <Pressable
-        onPress={() => {
           navigation.navigate('Home1');
         }}
         style={styles.tabButtons}>
         <Image
           style={styles.iconButton}
-          source={require('../../assets/home(1).png')}
+          source={require('../../assets/home.png')}
         />
       </Pressable>
 
@@ -80,14 +63,14 @@ function TabBar() {
       </Pressable>
       <Pressable
         onPress={() => {
-          navigation.navigate('Add', {id: 1});
+          navigation.navigate('Add');
         }}
         style={styles.tabButtons}>
         <Image
           style={styles.iconButton}
-          source={require('../../assets/add.png')}
+          source={require('../../assets/plus.png')}
         />
-        <Text style={styles.iconText}>Add</Text>
+        {/* <Text style={styles.iconText}>`Add`</Text> */}
       </Pressable>
       <Pressable
         onPress={() => {
@@ -96,7 +79,7 @@ function TabBar() {
         style={styles.tabButtons}>
         <Image
           style={styles.iconButton}
-          source={require('../../assets/chat.png')}
+          source={require('../../assets/messenger.png')}
         />
       </Pressable>
       <Pressable
@@ -106,17 +89,7 @@ function TabBar() {
         style={styles.tabButtons}>
         <Image
           style={styles.iconButton}
-          source={require('../../assets/user(1).png')}
-        />
-      </Pressable>
-      <Pressable
-        onPress={() => {
-          navigation.navigate('Profile2');
-        }}
-        style={styles.tabButtons}>
-        <Image
-          style={styles.iconButton}
-          source={require('../../assets/user(1).png')}
+          source={require('../../assets/user.png')}
         />
       </Pressable>
     </View>
@@ -125,7 +98,7 @@ function TabBar() {
 
 const styles = StyleSheet.create({
   container: {
-    height: h(6.7),
+    height: h(5.7),
     width: '90%',
     marginLeft: 19,
 

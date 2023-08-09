@@ -1,7 +1,4 @@
-import React, {useCallback, useEffect, useMemo, useRef, useState} from 'react';
 import {h, w, f} from '../theme/responsive';
-import BottomSheet from '@gorhom/bottom-sheet';
-import {GestureHandlerRootView} from 'react-native-gesture-handler';
 import {
   View,
   Text,
@@ -11,22 +8,24 @@ import {
   ScrollView,
   ImageBackground,
 } from 'react-native';
+import BottomSheet from '@gorhom/bottom-sheet';
+import {GestureHandlerRootView} from 'react-native-gesture-handler';
+import React, {useCallback, useEffect, useMemo, useRef, useState} from 'react';
 import {useNavigation} from '@react-navigation/native';
-
 const Add = props => {
   const navigation = useNavigation();
   const bottomSheetRef = useRef(null);
   const [getId, setID] = useState(0);
-  const snapPoints = useMemo(() => ['3%', '37%'], []);
+  const snapPoints = useMemo(() => ['15%', '37%'], []);
 
   const handleSheetChanges = useCallback(index => {
     setID(parseInt(index));
   }, []);
 
-  useEffect(() => {
-    const {route} = props;
-    setID(route?.params.id);
-  }, []);
+  // useEffect(() => {
+  //   const {route} = props;
+  //   setID(route?.params.id);
+  // }, []);
   return (
     <GestureHandlerRootView style={styles.mainContainer}>
       <BottomSheet
@@ -41,7 +40,7 @@ const Add = props => {
           <View style={styles.description}>
             <Pressable
               onPress={() => {
-                navigation.navigate('Login1');
+                navigation.navigate('PostPin');
               }}
               style={styles.detail}>
               <Image
@@ -52,7 +51,7 @@ const Add = props => {
 
             <Pressable
               onPress={() => {
-                navigation.navigate('Login1');
+                navigation.navigate('PostPin');
               }}
               style={styles.detail}>
               <Image
@@ -62,7 +61,7 @@ const Add = props => {
             </Pressable>
             <Pressable
               onPress={() => {
-                navigation.navigate('Login1');
+                navigation.navigate('PostPin');
               }}
               style={styles.detail}>
               <Image
