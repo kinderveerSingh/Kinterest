@@ -15,6 +15,7 @@ import Notification from './notification';
 import Profile from './profile';
 import PinView from './pinView';
 import PostPin from './postPin';
+import AddProfile from './addProfile';
 import {h, f, w} from '../theme/responsive';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 
@@ -32,6 +33,7 @@ const BottomNavigator = () => {
       <Tab.Screen name="PostPin" component={PostPin} />
       <Tab.Screen name="Notification" component={Notification} />
       <Tab.Screen name="Profile" component={Profile} />
+      <Tab.Screen name="AddProfile" component={AddProfile} />
     </Tab.Navigator>
   );
 };

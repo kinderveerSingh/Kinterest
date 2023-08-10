@@ -14,6 +14,8 @@ import firestore from '@react-native-firebase/firestore';
 const Profile = () => {
   const navigation = useNavigation();
   const [data, setData] = useState([]);
+
+  //const { Name,Email, image} = item || {};
   console.log(data);
   useEffect(() => {
     fetchData();
@@ -32,12 +34,16 @@ const Profile = () => {
   return (
     <View style={styles.container}>
       <View style={styles.header}>
-        <View style={styles.subheader1}>
+        <Pressable
+          onPress={() => {
+            navigation.navigate('AddProfile');
+          }}
+          style={styles.subheader1}>
           <Image
             source={require('../../assets/add-friend.png')}
             style={styles.icon}
           />
-        </View>
+        </Pressable>
         <View style={styles.subheader2}>
           <Text style={styles.profilename}>Profile</Text>
         </View>
@@ -60,7 +66,6 @@ const Profile = () => {
     </View>
   );
 };
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,
