@@ -40,13 +40,13 @@ const Login1 = () => {
           angleCenter={{x: 3.4, y: -1.4}}
           style={styles.gradient}>
           <Image
-            source={require('../../assets/pinterest(1).png')}
+            source={require('../../assets/k-without-bg.png')}
             style={styles.iconStyle}
           />
-          <Text style={styles.textStyle}>{`Welcome To Pinterest`}</Text>
+          <Text style={styles.textStyle}>{`Welcome To Kinterest`}</Text>
           <TextInput
             style={styles.inputStyle}
-            placeholder="Email address"
+            placeholder=" Email address"
             keyboardType={'default'}
             value={email}
             onChangeText={txt => setEmail(txt)}></TextInput>
@@ -111,6 +111,7 @@ const styles = StyleSheet.create({
     height: h(5.9),
     width: '90%',
     borderWidth: 1,
+
     borderRadius: 20,
     fontWeight: '600',
     alignItems: 'center',
@@ -123,11 +124,11 @@ const styles = StyleSheet.create({
     tintColor: 'red',
   },
   iconStyle: {
-    height: h(10.6),
-    width: w(20.4),
+    height: h(14),
+    width: w(24),
     // alignItems: 'center',
     //justifyContent: 'center',
-    top: -27,
+    top: -37,
   },
   textStyle: {
     fontWeight: '500',

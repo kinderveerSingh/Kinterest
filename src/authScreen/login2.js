@@ -7,6 +7,7 @@ import {
   TextInput,
   Image,
   Alert,
+  TouchableOpacity,
 } from 'react-native';
 import React, {useState} from 'react';
 import {
@@ -16,7 +17,7 @@ import {
 import auth from '@react-native-firebase/auth';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {h, f, w} from '../theme/responsive';
-import Toast from 'react-native-simple-toast';
+
 import {useNavigation} from '@react-navigation/native';
 import firestore from '@react-native-firebase/firestore';
 
@@ -58,23 +59,6 @@ function Login2(props) {
         };
 
         AsyncStorage.setItem('userDetail', JSON.stringify(obj));
-        //      await
-        // .firestore()
-        // .collection('loginUser')
-        // .doc(response.user.uid)
-        // .set(LoginDetail);
-        //for
-
-        // const {email} = result.user;
-        // const userDetail = {
-        //   email,
-        // };
-        // const userDetailJson = JSON.stringify(userDetail);
-        // AsyncStorage.setItem('userDetail', userDetailJson);
-        // AsyncStorage.setItem('userLogin', 'true');
-        // setUserLogin('true');
-        // setUserDetails(userDetail);
-        //console.log('User account created & signed in!', result.user);
       })
       .catch(error => {
         if (error.code === 'auth/email-already-in-use') {
@@ -226,6 +210,7 @@ function Login2(props) {
           {/* // value={this.state.password}
           // onChangeText={password => setPassword(password)}> */}
         </TextInput>
+
         <Pressable
           style={styles.inputbutton}
           onPress={() => {
@@ -238,6 +223,12 @@ function Login2(props) {
             }
           }}>
           <Text style={styles.textStyle3}>Continue</Text>
+        </Pressable>
+        <Pressable>
+          <Text
+            style={{fontWeight: '500', fontSize: f(1.3), flexDirection: 'row'}}>
+            New User ?<Text style={{color: 'black'}}> Sign Up here</Text>
+          </Text>
         </Pressable>
       </View>
     </ScrollView>

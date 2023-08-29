@@ -75,6 +75,11 @@ const Search = props => {
             style={{width: 30, height: 30}}></Image>
         </TouchableOpacity>
       </Animated.View>
+      <View>
+        <Image
+          source={require('../../assets/Searchengines-pana(1).png')}
+          style={styles.imagesearch}></Image>
+      </View>
     </GestureHandlerRootView>
   );
 };
@@ -86,6 +91,13 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'flex-start',
+    marginTop: 30,
+  },
+  imagesearch: {
+    height: 420,
+    width: 320,
+    alignItems: 'center',
+
     marginTop: 30,
   },
 });
